@@ -1,10 +1,7 @@
 import json
 import pandas as pd
 from pathlib import Path
-
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 instances_file = (
     BASE_DIR
     / "data"
@@ -14,7 +11,6 @@ instances_file = (
     / "clickbait17-validation-170630"
     / "instances.jsonl"
 )
-
 truth_file = (
     BASE_DIR
     / "data"
@@ -24,18 +20,14 @@ truth_file = (
     / "clickbait17-validation-170630"
     / "truth.jsonl"
 )
-
 output_file = (
     BASE_DIR
     / "data"
     / "processed"
     / "clickbait.csv"
 )
-
-
 # Read instances
 instances = {}
-
 with open(instances_file, "r", encoding="utf-8") as f:
     for line in f:
         record = json.loads(line)
@@ -44,23 +36,16 @@ with open(instances_file, "r", encoding="utf-8") as f:
 
 # Read labels and combine
 rows = []
-
 with open(truth_file, "r", encoding="utf-8") as f:
     for line in f:
         truth = json.loads(line)
-
         article_id = truth["id"]
-
         if article_id not in instances:
             continue
-
         article = instances[article_id]
-
         headline = article.get("targetTitle", "").strip()
-
         if not headline:
             continue
-
         rows.append(
             {
                 "id": article_id,
@@ -69,8 +54,6 @@ with open(truth_file, "r", encoding="utf-8") as f:
                 "clickbait_label": truth["truthClass"],
             }
         )
-
-
 # Create DataFrame
 df = pd.DataFrame(rows)
 
