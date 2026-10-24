@@ -14,9 +14,7 @@ data/raw/
 # Generated processed datasets
 data/processed/
 
-# Trained models
-models/*.joblib
-models/*.pkl
+# Trained models - removed post
 
 # Environment/secrets
 .env
