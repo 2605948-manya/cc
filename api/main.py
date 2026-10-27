@@ -2,6 +2,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from src.pipeline import analyze_news
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(
     title="Clickbait and Credibility Scoring API",
     description=(
@@ -9,6 +10,17 @@ app = FastAPI(
         "and estimate credibility using the trained models."
     ),
     version="1.0.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000", 
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 class NewsRequest(BaseModel):
